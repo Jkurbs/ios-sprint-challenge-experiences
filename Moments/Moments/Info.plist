@@ -66,5 +66,7 @@
 	<string>$(PRODUCT_NAME) needs access to your microphone to add audios.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>$(PRODUCT_NAME) needs access to your photo library to add photos.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>$(PRODUCT_NAME) needs access to your location.</string>
 </dict>
 </plist>

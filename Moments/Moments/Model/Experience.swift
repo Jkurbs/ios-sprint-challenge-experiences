@@ -9,10 +9,17 @@
 import UIKit
 import Foundation
 
-class Experience {
-    var image: UIImage?
-    var audio: String?
-    var videoUrl: String?
+struct Experience: Codable {
+    
+    var imageData: Data?
+    var url: URL?
     var title: String?
-    var place: String?
+    var location: Location!
+    
+    init(imageData: Data?, url: URL?, title: String, location: Location?) {
+        self.imageData = imageData
+        self.url = url
+        self.title = title
+        self.location = location
+    }
 }

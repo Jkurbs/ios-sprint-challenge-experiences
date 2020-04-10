@@ -14,9 +14,11 @@ class VideoController: NSObject {
     
     lazy var captureSession = AVCaptureSession()
     lazy var fileOutput = AVCaptureMovieFileOutput()
+    let cameraOutput = AVCapturePhotoOutput()
+
     
     var session: AVCaptureSession?
-    var fileUrl: URL?
+    var videoUrl: URL?
     
     var hasAudio: Bool = false {
         didSet {
@@ -24,8 +26,12 @@ class VideoController: NSObject {
         }
     }
     
+    var imageData: Data?
+        
     func setUpCaptureSession() {
         captureSession.beginConfiguration()
+        captureSession.sessionPreset = AVCaptureSession.Preset.photo
+        
         // Add inputs
         let camera = bestCamera()
         
@@ -38,6 +44,10 @@ class VideoController: NSObject {
         
         if captureSession.canSetSessionPreset(.hd1920x1080) { // FUTURE: Play with 4k
             captureSession.sessionPreset = .hd1920x1080
+        }
+        
+        if captureSession.canAddOutput(cameraOutput){
+              captureSession.addOutput(cameraOutput)
         }
         
         // Add outputs
@@ -55,7 +65,7 @@ class VideoController: NSObject {
         // Audio
         
         let microphone = bestAudio()
-               guard let audioInput = try? AVCaptureDeviceInput(device: microphone),
+        guard let audioInput = try? AVCaptureDeviceInput(device: microphone),
             captureSession.canAddInput(audioInput) else {
         fatalError("Can't create microphone input")
         }
@@ -64,6 +74,7 @@ class VideoController: NSObject {
             hasAudio = false
             captureSession.removeInput(audioInput)
         } else {
+            print("No audio")
             hasAudio = true
             captureSession.addInput(audioInput)
         }
@@ -100,8 +111,8 @@ class VideoController: NSObject {
     }
     
     func startRecording() {
-        let url = FileController.momentURL(folderName: "Test", pathExtension: "mov")
-        self.fileUrl = url
+        let url = FileController.momentURL()
+        self.videoUrl = url
         fileOutput.startRecording(to: url, recordingDelegate: self)
     }
     
@@ -110,15 +121,18 @@ class VideoController: NSObject {
             fileOutput.stopRecording()
         }
     }
+
     
-    func captureImage(view: UIView) {
-        UIGraphicsBeginImageContextWithOptions(view.frame.size, false, 0.0)
-        view.drawHierarchy(in: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height), afterScreenUpdates: true)
-        if let image = UIGraphicsGetImageFromCurrentImageContext() {
-            UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-        }
-        UIGraphicsEndImageContext();
-    }
+    func captureImage() {
+        let settings = AVCapturePhotoSettings()
+        let previewPixelType = settings.availablePreviewPhotoPixelFormatTypes.first!
+        let previewFormat = [kCVPixelBufferPixelFormatTypeKey as String: previewPixelType,
+                             kCVPixelBufferWidthKey as String: 160,
+                             kCVPixelBufferHeightKey as String: 160]
+        settings.previewPhotoFormat = previewFormat
+        self.cameraOutput.capturePhoto(with: settings, delegate: self)
+
+   }
 }
 
 extension VideoController: AVCaptureFileOutputRecordingDelegate {
@@ -131,6 +145,15 @@ extension VideoController: AVCaptureFileOutputRecordingDelegate {
     func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
         // Update UI
         print("RECORDING DID START")
+    }
+}
+
+extension VideoController: AVCapturePhotoCaptureDelegate {
+    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+       let imageData = photo.fileDataRepresentation()
+        if let data = imageData {
+            self.imageData = data
+        }
     }
 }
 

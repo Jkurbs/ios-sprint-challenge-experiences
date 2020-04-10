@@ -15,7 +15,8 @@ class AddVideoViewController: UIViewController {
     
     let mediaView = MediaView()
     var videoController = VideoController()
-    
+    var persistenceController: PersistenceController?
+    var locationController: LocationController?
     
     // MARK: - View Lifecycle
     override func viewDidLoad() {
@@ -39,6 +40,7 @@ class AddVideoViewController: UIViewController {
     // MARK: - Functions
     func setupViews() {
         view.backgroundColor = .white
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
         mediaView.delegate = self
         mediaView.cameraView.videoPlayerView.videoGravity = .resizeAspectFill
         mediaView.cameraView.session = videoController.captureSession
@@ -51,6 +53,15 @@ class AddVideoViewController: UIViewController {
             mediaView.heightAnchor.constraint(equalToConstant: view.frame.height),
             mediaView.widthAnchor.constraint(equalTo: view.widthAnchor)
         ])
+    }
+    
+    @objc func save() {
+        let imageData = videoController.imageData
+        let videoUrl = videoController.videoUrl
+        let experience = Experience(imageData: imageData,  url: videoUrl, title: "", location: Location(latitude: locationController?.location?.latitude, longitude: locationController?.location?.longitude))
+        persistenceController?.experiences.append(experience)
+        persistenceController?.saveToPersistence()
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -65,16 +76,14 @@ extension AddVideoViewController: TapHandlerDelegate {
     }
     
     func takePhotoTapped() {
-        videoController.captureImage(view: mediaView)
+
+        videoController.captureImage()
     }
     
     func switchAudio() {
-        print("TApped")
         if videoController.hasAudio == true {
-            print("TRUE")
             mediaView.cameraView.audioSwith = "Audio off"
         } else {
-            print("FALSE")
              mediaView.cameraView.audioSwith = "Audio on"
         }
     }

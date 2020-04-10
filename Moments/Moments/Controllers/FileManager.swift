@@ -10,24 +10,33 @@ import Foundation
 
 class FileController {
     /// Creates a new file URL in the documents directory
-    static func momentURL(folderName: String, pathExtension: String) -> URL {
+    static func momentURL() -> URL {
         
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        
+
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions = [.withInternetDateTime]
+
+        let name = formatter.string(from: Date())
+        let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
+        return fileURL
         
-        let fileName = formatter.string(from: Date())
-        
-        let dataPath = documentsDirectory.appendingPathComponent(folderName)
-        
-        if !FileManager.default.fileExists(atPath: dataPath.absoluteString) {
-            do {
-                try FileManager.default.createDirectory(atPath: dataPath.relativePath, withIntermediateDirectories: true, attributes: nil)
-            } catch {
-                print(error.localizedDescription);
-            }
-        }
-        return dataPath.appendingPathComponent(fileName).appendingPathExtension(pathExtension)
+//        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+//
+//        let formatter = ISO8601DateFormatter()
+//        formatter.formatOptions = [.withInternetDateTime]
+//
+//        let fileName = formatter.string(from: Date())
+//
+//        let dataPath = documentsDirectory.appendingPathComponent(folderName)
+//
+//        if !FileManager.default.fileExists(atPath: dataPath.absoluteString) {
+//            do {
+//                try FileManager.default.createDirectory(atPath: dataPath.relativePath, withIntermediateDirectories: true, attributes: nil)
+//            } catch {
+//                print(error.localizedDescription);
+//            }
+//        }
+//        return dataPath.appendingPathComponent(fileName).appendingPathExtension(pathExtension)
     }
 }

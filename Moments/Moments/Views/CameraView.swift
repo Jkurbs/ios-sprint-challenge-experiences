@@ -33,9 +33,7 @@ class CameraView: UIView {
         get { return videoPlayerView.session }
         set { videoPlayerView.session = newValue }
     }
-    
-    weak var delegate: TapHandlerDelegate? 
-    
+        
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -43,12 +41,10 @@ class CameraView: UIView {
         
         switchCameraButton.setImage(UIImage(systemName: "arrow.2.ciclepath"), for: .normal)
         switchCameraButton.translatesAutoresizingMaskIntoConstraints = false
-//        switchCameraButton.addTarget(self, action: #selector(takePhotoTapped), for: .touchUpInside)
         addSubview(switchCameraButton)
         
         switchAudioButton.setTitle("Audio off", for: .normal)
         switchAudioButton.translatesAutoresizingMaskIntoConstraints = false
-        switchAudioButton.addTarget(self, action: #selector(switchAudio), for: .touchUpInside)
         addSubview(switchAudioButton)
     }
     
@@ -74,10 +70,5 @@ class CameraView: UIView {
             switchAudioButton.heightAnchor.constraint(equalToConstant: 100.0),
             switchAudioButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -24.0),
         ])
-    }
-    
-    @objc func switchAudio() {
-        print("Tapped")
-        delegate?.switchAudio()
     }
 }
