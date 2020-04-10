@@ -25,7 +25,11 @@ class VideoController: NSObject {
     
     var videoId = UUID().uuidString
     
-    var imageData = [Data]()
+    var imageData = [Data]() {
+        didSet {
+            NotificationCenter.default.post(name: NSNotification.Name("imageAdded"), object: nil)
+        }
+    }
         
     func setUpCaptureSession() {
         captureSession.beginConfiguration()

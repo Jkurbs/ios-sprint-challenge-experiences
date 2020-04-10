@@ -20,10 +20,10 @@ class DetailsViewController: UIViewController {
         view.backgroundColor = .white
         
         let layout = UICollectionViewFlowLayout()
-              let width = (view.frame.width / 3) - 10
-              layout.itemSize = CGSize(width: width, height: width)
-              layout.sectionInset = UIEdgeInsets(top: 25, left: 5, bottom: 50, right: 5)
-              layout.minimumLineSpacing = 20
+        let width = (view.frame.width / 3) - 10
+        layout.itemSize = CGSize(width: width, height: width)
+            layout.sectionInset = UIEdgeInsets(top: 25, left: 5, bottom: 50, right: 5)
+            layout.minimumLineSpacing = 20
               layout.minimumInteritemSpacing = 10
               
         collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
