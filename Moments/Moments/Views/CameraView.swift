@@ -11,8 +11,15 @@ import AVFoundation
 
 
 class CameraView: UIView {
+
+    var switchCameraButton = UIButton()
+    var switchAudioButton = UIButton()
     
-    var recordButton = UIButton()
+    var audioSwith: String? {
+        didSet {
+            switchAudioButton.setTitle(audioSwith, for: .normal)
+        }
+    }
     
     override class var layerClass: AnyClass {
         return AVCaptureVideoPreviewLayer.self
@@ -32,11 +39,17 @@ class CameraView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        translatesAutoresizingMaskIntoConstraints = false 
-        recordButton.setTitle("RECORD", for: .normal)   
-        recordButton.translatesAutoresizingMaskIntoConstraints = false
-        recordButton.addTarget(self, action: #selector(recordingTapped), for: .touchUpInside)
-        addSubview(recordButton)
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        switchCameraButton.setImage(UIImage(systemName: "arrow.2.ciclepath"), for: .normal)
+        switchCameraButton.translatesAutoresizingMaskIntoConstraints = false
+//        switchCameraButton.addTarget(self, action: #selector(takePhotoTapped), for: .touchUpInside)
+        addSubview(switchCameraButton)
+        
+        switchAudioButton.setTitle("Audio off", for: .normal)
+        switchAudioButton.translatesAutoresizingMaskIntoConstraints = false
+        switchAudioButton.addTarget(self, action: #selector(switchAudio), for: .touchUpInside)
+        addSubview(switchAudioButton)
     }
     
     required init?(coder: NSCoder) {
@@ -50,14 +63,21 @@ class CameraView: UIView {
     
     func addConstraints() {
         NSLayoutConstraint.activate([
-            recordButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -24.0),
-            recordButton.widthAnchor.constraint(equalToConstant: 100.0),
-            recordButton.heightAnchor.constraint(equalToConstant: 100.0),
-            recordButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+            
+            switchCameraButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 24.0),
+            switchCameraButton.widthAnchor.constraint(equalToConstant: 40.0),
+            switchCameraButton.heightAnchor.constraint(equalToConstant: 40.0),
+            switchCameraButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -24.0),
+            
+            switchAudioButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -24.0),
+            switchAudioButton.widthAnchor.constraint(equalToConstant: 100.0),
+            switchAudioButton.heightAnchor.constraint(equalToConstant: 100.0),
+            switchAudioButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -24.0),
         ])
     }
     
-    @objc func recordingTapped() {
-        delegate?.recordButtonTapped()
+    @objc func switchAudio() {
+        print("Tapped")
+        delegate?.switchAudio()
     }
 }

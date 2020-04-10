@@ -9,5 +9,9 @@
 import Foundation
 
 protocol TapHandlerDelegate: NSObjectProtocol {
-    func recordButtonTapped()
+    func recordingPressed()
+    func recordingStopped()
+    func takePhotoTapped()
+    func switchAudio()
+    func switchCamera()
 }

@@ -13,7 +13,7 @@ class AddVideoViewController: UIViewController {
 
     private var player: AVPlayer!
     
-    let cameraView = CameraView()
+    let mediaView = MediaView()
     var videoController = VideoController()
     
     
@@ -39,25 +39,47 @@ class AddVideoViewController: UIViewController {
     // MARK: - Functions
     func setupViews() {
         view.backgroundColor = .white
-        cameraView.backgroundColor = .red
-        cameraView.delegate = self
-        cameraView.videoPlayerView.videoGravity = .resizeAspectFill
-        cameraView.session = videoController.captureSession
-        view.addSubview(cameraView)
+        mediaView.delegate = self
+        mediaView.cameraView.videoPlayerView.videoGravity = .resizeAspectFill
+        mediaView.cameraView.session = videoController.captureSession
+        view.addSubview(mediaView)
     }
     
     
     func addConstraints() {
         NSLayoutConstraint.activate([
-            cameraView.heightAnchor.constraint(equalTo: view.heightAnchor),
-            cameraView.widthAnchor.constraint(equalTo: view.widthAnchor)
+            mediaView.heightAnchor.constraint(equalToConstant: view.frame.height),
+            mediaView.widthAnchor.constraint(equalTo: view.widthAnchor)
         ])
     }
 }
 
 extension AddVideoViewController: TapHandlerDelegate {
     
-    func recordButtonTapped() {
+    func recordingPressed() {
         videoController.startRecording()
+    }
+    
+    func recordingStopped() {
+        videoController.stopRecording()
+    }
+    
+    func takePhotoTapped() {
+        videoController.captureImage(view: mediaView)
+    }
+    
+    func switchAudio() {
+        print("TApped")
+        if videoController.hasAudio == true {
+            print("TRUE")
+            mediaView.cameraView.audioSwith = "Audio off"
+        } else {
+            print("FALSE")
+             mediaView.cameraView.audioSwith = "Audio on"
+        }
+    }
+    
+    func switchCamera() {
+        
     }
 }

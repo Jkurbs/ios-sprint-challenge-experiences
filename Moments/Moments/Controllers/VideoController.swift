@@ -8,6 +8,7 @@
 
 import Foundation
 import AVFoundation
+import UIKit
 
 class VideoController: NSObject {
     
@@ -16,6 +17,12 @@ class VideoController: NSObject {
     
     var session: AVCaptureSession?
     var fileUrl: URL?
+    
+    var hasAudio: Bool = false {
+        didSet {
+            configureAudio()
+        }
+    }
     
     func setUpCaptureSession() {
         captureSession.beginConfiguration()
@@ -44,6 +51,24 @@ class VideoController: NSObject {
         captureSession.commitConfiguration()
     }
     
+    func configureAudio() {
+        // Audio
+        
+        let microphone = bestAudio()
+               guard let audioInput = try? AVCaptureDeviceInput(device: microphone),
+            captureSession.canAddInput(audioInput) else {
+        fatalError("Can't create microphone input")
+        }
+        
+        if hasAudio == true {
+            hasAudio = false
+            captureSession.removeInput(audioInput)
+        } else {
+            hasAudio = true
+            captureSession.addInput(audioInput)
+        }
+    }
+    
     func startCaptureSession() {
         captureSession.startRunning()
     }
@@ -67,14 +92,32 @@ class VideoController: NSObject {
         fatalError("No cameras on the device (or you're running this on a Simulator which isn't supported)")
     }
     
+    private func bestAudio() -> AVCaptureDevice {
+        if let device = AVCaptureDevice.default(for: .audio) {
+            return device
+        }
+        fatalError("No audio")
+    }
+    
     func startRecording() {
+        let url = FileController.momentURL(folderName: "Test", pathExtension: "mov")
+        self.fileUrl = url
+        fileOutput.startRecording(to: url, recordingDelegate: self)
+    }
+    
+    func stopRecording() {
         if fileOutput.isRecording {
             fileOutput.stopRecording()
-        } else {
-            let url = FileController.momentURL(folderName: "Test", pathExtension: "mov")
-            self.fileUrl = url
-            fileOutput.startRecording(to: url, recordingDelegate: self)
         }
+    }
+    
+    func captureImage(view: UIView) {
+        UIGraphicsBeginImageContextWithOptions(view.frame.size, false, 0.0)
+        view.drawHierarchy(in: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height), afterScreenUpdates: true)
+        if let image = UIGraphicsGetImageFromCurrentImageContext() {
+            UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        }
+        UIGraphicsEndImageContext();
     }
 }
 
