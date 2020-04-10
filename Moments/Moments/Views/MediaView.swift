@@ -12,8 +12,11 @@ class MediaView: UIView {
     
     var cameraView = CameraView()
     var recordButton = UIButton()
+    var detailsLabel = UILabel()
     
     weak var delegate: TapHandlerDelegate?
+    
+    var audioState: Bool? = true
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,6 +31,11 @@ class MediaView: UIView {
         recordButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(recordingPressed(_:))))
         addSubview(recordButton)
         cameraView.switchAudioButton.addTarget(self, action: #selector(switchAudioOn), for: .touchUpInside)
+        
+        detailsLabel.text = "Tap for a picture or long press to capture video."
+        detailsLabel.font = UIFont.systemFont(ofSize: 14)
+        detailsLabel.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(detailsLabel)
     }
     
     required init?(coder: NSCoder) {
@@ -36,7 +44,13 @@ class MediaView: UIView {
     
     
     @objc func switchAudioOn() {
-        delegate?.switchAudio()
+        if audioState == true {
+            audioState = false
+            delegate?.audioOff()
+        } else {
+            audioState = true
+            delegate?.audioOn()
+        }
     }
     
     @objc private func takePhotoTapped() {
@@ -44,8 +58,9 @@ class MediaView: UIView {
     }
     
     @objc private func recordingPressed(_ gesture: UILongPressGestureRecognizer) {
+        gesture.numberOfTouchesRequired = 1
         switch gesture.state {
-        case .recognized, .began:
+        case .began, .recognized:
             delegate?.recordingPressed()
         default:
             break
@@ -69,6 +84,9 @@ class MediaView: UIView {
             recordButton.centerXAnchor.constraint(equalTo: centerXAnchor),
             recordButton.widthAnchor.constraint(equalToConstant: 100.0),
             recordButton.heightAnchor.constraint(equalToConstant: 100.0),
+            
+            detailsLabel.topAnchor.constraint(equalTo: recordButton.bottomAnchor, constant: 8.0),
+            detailsLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
         ])
     }
 }

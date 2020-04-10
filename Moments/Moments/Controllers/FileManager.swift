@@ -10,33 +10,12 @@ import Foundation
 
 class FileController {
     /// Creates a new file URL in the documents directory
-    static func momentURL() -> URL {
-        
+    
+    var url: URL?
+    
+    func momentURL(id: String) {
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime]
-
-        let name = formatter.string(from: Date())
-        let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
-        return fileURL
-        
-//        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-//
-//        let formatter = ISO8601DateFormatter()
-//        formatter.formatOptions = [.withInternetDateTime]
-//
-//        let fileName = formatter.string(from: Date())
-//
-//        let dataPath = documentsDirectory.appendingPathComponent(folderName)
-//
-//        if !FileManager.default.fileExists(atPath: dataPath.absoluteString) {
-//            do {
-//                try FileManager.default.createDirectory(atPath: dataPath.relativePath, withIntermediateDirectories: true, attributes: nil)
-//            } catch {
-//                print(error.localizedDescription);
-//            }
-//        }
-//        return dataPath.appendingPathComponent(fileName).appendingPathExtension(pathExtension)
+        let fileURL = documentsDirectory.appendingPathComponent(id).appendingPathExtension("mov")
+        self.url = fileURL
     }
 }

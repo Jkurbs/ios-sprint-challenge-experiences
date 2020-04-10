@@ -15,18 +15,17 @@ class VideoController: NSObject {
     lazy var captureSession = AVCaptureSession()
     lazy var fileOutput = AVCaptureMovieFileOutput()
     let cameraOutput = AVCapturePhotoOutput()
-
     
     var session: AVCaptureSession?
-    var videoUrl: URL?
+    var videoPath: String?
+    var fileController = FileController()
     
-    var hasAudio: Bool = false {
-        didSet {
-            configureAudio()
-        }
-    }
     
-    var imageData: Data?
+    var audioInput: AVCaptureDeviceInput?
+    
+    var videoId = UUID().uuidString
+    
+    var imageData = [Data]()
         
     func setUpCaptureSession() {
         captureSession.beginConfiguration()
@@ -41,6 +40,7 @@ class VideoController: NSObject {
                 fatalError("Can't create the input form the camera")
         }
         captureSession.addInput(captureInput)
+
         
         if captureSession.canSetSessionPreset(.hd1920x1080) { // FUTURE: Play with 4k
             captureSession.sessionPreset = .hd1920x1080
@@ -51,6 +51,14 @@ class VideoController: NSObject {
         }
         
         // Add outputs
+        let microphone = bestAudio()
+        guard let audioInput = try? AVCaptureDeviceInput(device: microphone),
+            captureSession.canAddInput(audioInput) else {
+                
+        fatalError("Can't create microphone input")
+        }
+        captureSession.addInput(audioInput)
+        self.audioInput = audioInput
         
         // Recording to disk
         guard captureSession.canAddOutput(fileOutput) else {
@@ -61,24 +69,16 @@ class VideoController: NSObject {
         captureSession.commitConfiguration()
     }
     
-    func configureAudio() {
-        // Audio
-        
-        let microphone = bestAudio()
-        guard let audioInput = try? AVCaptureDeviceInput(device: microphone),
-            captureSession.canAddInput(audioInput) else {
-        fatalError("Can't create microphone input")
-        }
-        
-        if hasAudio == true {
-            hasAudio = false
-            captureSession.removeInput(audioInput)
-        } else {
-            print("No audio")
-            hasAudio = true
-            captureSession.addInput(audioInput)
-        }
+    
+
+    func addAudio() {
+        captureSession.addInput(self.audioInput!)
     }
+    
+    func removeAudio() {
+        captureSession.removeInput(self.audioInput!)
+    }
+
     
     func startCaptureSession() {
         captureSession.startRunning()
@@ -111,10 +111,10 @@ class VideoController: NSObject {
     }
     
     func startRecording() {
-        let url = FileController.momentURL()
-        self.videoUrl = url
-        fileOutput.startRecording(to: url, recordingDelegate: self)
+        fileController.momentURL(id: videoId)
+        fileOutput.startRecording(to: fileController.url!, recordingDelegate: self)
     }
+    
     
     func stopRecording() {
         if fileOutput.isRecording {
@@ -138,13 +138,11 @@ class VideoController: NSObject {
 extension VideoController: AVCaptureFileOutputRecordingDelegate {
     
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
-        print("RECORDING DID FINISH")
     }
     
     
     func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
         // Update UI
-        print("RECORDING DID START")
     }
 }
 
@@ -152,7 +150,7 @@ extension VideoController: AVCapturePhotoCaptureDelegate {
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
        let imageData = photo.fileDataRepresentation()
         if let data = imageData {
-            self.imageData = data
+            self.imageData.append(data)
         }
     }
 }

@@ -43,7 +43,7 @@ class CameraView: UIView {
         switchCameraButton.translatesAutoresizingMaskIntoConstraints = false
         addSubview(switchCameraButton)
         
-        switchAudioButton.setTitle("Audio off", for: .normal)
+        switchAudioButton.setTitle("Audio on", for: .normal)
         switchAudioButton.translatesAutoresizingMaskIntoConstraints = false
         addSubview(switchAudioButton)
     }

@@ -11,14 +11,14 @@ import Foundation
 
 struct Experience: Codable {
     
-    var imageData: Data?
-    var url: URL?
+    var imageData: [Data]?
+    var videoPath: String?
     var title: String?
     var location: Location!
     
-    init(imageData: Data?, url: URL?, title: String, location: Location?) {
+    init(imageData: [Data]?, videoPath: String?, title: String, location: Location?) {
         self.imageData = imageData
-        self.url = url
+        self.videoPath = videoPath
         self.title = title
         self.location = location
     }

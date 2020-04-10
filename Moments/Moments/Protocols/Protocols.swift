@@ -12,6 +12,7 @@ protocol TapHandlerDelegate: NSObjectProtocol {
     func recordingPressed()
     func recordingStopped()
     func takePhotoTapped()
-    func switchAudio()
+    func audioOn()
+    func audioOff()
     func switchCamera()
 }

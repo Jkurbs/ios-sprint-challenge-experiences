@@ -17,7 +17,6 @@ class MomentsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         self.title = "Experiences"
         view.backgroundColor = .white
         navigationItem.rightBarButtonItem =  UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showAddMomentVC))
@@ -48,7 +47,8 @@ class MomentsViewController: UIViewController {
     
     
     @objc func showAddMomentVC() {
-        let vc = AddVideoViewController()
+        let vc = AddExperienceViewController()
+        vc.currentCount =  persistenceController.experiences.count
         vc.persistenceController = self.persistenceController
         vc.locationController = self.locationController
         let nav = UINavigationController(rootViewController: vc)
@@ -65,9 +65,7 @@ extension MomentsViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("COUNT:", persistenceController.experiences.count)
         return persistenceController.experiences.count
-
     }
     
     
@@ -77,6 +75,8 @@ extension MomentsViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let detailsVC = DetailsViewController()
+        detailsVC.experience = persistenceController.experiences[indexPath.row]
+        navigationController?.pushViewController(detailsVC, animated: true)
     }
 }

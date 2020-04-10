@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class AddVideoViewController: UIViewController {
+class AddExperienceViewController: UIViewController {
 
     private var player: AVPlayer!
     
@@ -17,11 +17,13 @@ class AddVideoViewController: UIViewController {
     var videoController = VideoController()
     var persistenceController: PersistenceController?
     var locationController: LocationController?
+    var currentCount: Int? 
     
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         videoController.setUpCaptureSession()
+        videoController.videoId = "\(currentCount ?? 1)"
         setupViews()
         addConstraints()
     }
@@ -39,6 +41,7 @@ class AddVideoViewController: UIViewController {
     
     // MARK: - Functions
     func setupViews() {
+        self.title = "Capture Experience"
         view.backgroundColor = .white
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
         mediaView.delegate = self
@@ -57,15 +60,14 @@ class AddVideoViewController: UIViewController {
     
     @objc func save() {
         let imageData = videoController.imageData
-        let videoUrl = videoController.videoUrl
-        let experience = Experience(imageData: imageData,  url: videoUrl, title: "", location: Location(latitude: locationController?.location?.latitude, longitude: locationController?.location?.longitude))
+        let experience = Experience(imageData: imageData,  videoPath: "\(currentCount!)", title: "", location: Location(latitude: locationController?.location?.latitude, longitude: locationController?.location?.longitude))
         persistenceController?.experiences.append(experience)
         persistenceController?.saveToPersistence()
         self.dismiss(animated: true, completion: nil)
     }
 }
 
-extension AddVideoViewController: TapHandlerDelegate {
+extension AddExperienceViewController: TapHandlerDelegate {
     
     func recordingPressed() {
         videoController.startRecording()
@@ -75,20 +77,23 @@ extension AddVideoViewController: TapHandlerDelegate {
         videoController.stopRecording()
     }
     
-    func takePhotoTapped() {
+    
+    func audioOn() {
+        mediaView.cameraView.audioSwith = "Audio on"
+        videoController.addAudio()
+    }
+    
+    func audioOff() {
+        mediaView.cameraView.audioSwith = "Audio off"
+        videoController.removeAudio()
+    }
 
+    
+    func takePhotoTapped() {
         videoController.captureImage()
     }
     
-    func switchAudio() {
-        if videoController.hasAudio == true {
-            mediaView.cameraView.audioSwith = "Audio off"
-        } else {
-             mediaView.cameraView.audioSwith = "Audio on"
-        }
-    }
-    
     func switchCamera() {
-        
+        // TODO
     }
 }
