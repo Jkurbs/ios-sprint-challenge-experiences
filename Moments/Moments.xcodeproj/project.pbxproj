@@ -13,6 +13,10 @@
 		6DBA36482440C46A0040630F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DBA36462440C46A0040630F /* Main.storyboard */; };
 		6DBA364A2440C46F0040630F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DBA36492440C46F0040630F /* Assets.xcassets */; };
 		6DBA364D2440C46F0040630F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DBA364B2440C46F0040630F /* LaunchScreen.storyboard */; };
+		6DBA36592440C4F20040630F /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBA36582440C4F20040630F /* Video.swift */; };
+		6DBA365B2440C5130040630F /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBA365A2440C5130040630F /* Audio.swift */; };
+		6DBA365D2440C52C0040630F /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBA365C2440C52C0040630F /* Image.swift */; };
+		6DBA365F2440C5D10040630F /* AddFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBA365E2440C5D10040630F /* AddFileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,10 @@
 		6DBA36492440C46F0040630F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6DBA364C2440C46F0040630F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6DBA364E2440C46F0040630F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6DBA36582440C4F20040630F /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
+		6DBA365A2440C5130040630F /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
+		6DBA365C2440C52C0040630F /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		6DBA365E2440C5D10040630F /* AddFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +64,10 @@
 		6DBA363F2440C46A0040630F /* Moments */ = {
 			isa = PBXGroup;
 			children = (
+				6DBA36572440C4A10040630F /* Model */,
+				6DBA36562440C49B0040630F /* ViewControllers */,
+				6DBA36552440C4960040630F /* Controllers */,
+				6DBA36542440C48F0040630F /* Views */,
 				6DBA36402440C46A0040630F /* AppDelegate.swift */,
 				6DBA36422440C46A0040630F /* SceneDelegate.swift */,
 				6DBA36442440C46A0040630F /* ViewController.swift */,
@@ -65,6 +77,38 @@
 				6DBA364E2440C46F0040630F /* Info.plist */,
 			);
 			path = Moments;
+			sourceTree = "<group>";
+		};
+		6DBA36542440C48F0040630F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		6DBA36552440C4960040630F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		6DBA36562440C49B0040630F /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				6DBA365E2440C5D10040630F /* AddFileViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		6DBA36572440C4A10040630F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6DBA36582440C4F20040630F /* Video.swift */,
+				6DBA365A2440C5130040630F /* Audio.swift */,
+				6DBA365C2440C52C0040630F /* Image.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,8 +183,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				6DBA36452440C46A0040630F /* ViewController.swift in Sources */,
+				6DBA365D2440C52C0040630F /* Image.swift in Sources */,
+				6DBA365F2440C5D10040630F /* AddFileViewController.swift in Sources */,
+				6DBA36592440C4F20040630F /* Video.swift in Sources */,
 				6DBA36412440C46A0040630F /* AppDelegate.swift in Sources */,
 				6DBA36432440C46A0040630F /* SceneDelegate.swift in Sources */,
+				6DBA365B2440C5130040630F /* Audio.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
