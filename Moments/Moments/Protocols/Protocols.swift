@@ -1,5 +1,5 @@
 //
-//  Audio.swift
+//  Protocols.swift
 //  Moments
 //
 //  Created by Kerby Jean on 4/10/20.
@@ -8,6 +8,6 @@
 
 import Foundation
 
-class Audio {
-    
+protocol TapHandlerDelegate: NSObjectProtocol {
+    func recordButtonTapped()
 }
