@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -22,7 +22,7 @@
 		6DBA365D2440C52C0040630F /* Experience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBA365C2440C52C0040630F /* Experience.swift */; };
 		6DBA365F2440C5D10040630F /* AddExperienceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBA365E2440C5D10040630F /* AddExperienceViewController.swift */; };
 		6DBA36612440C6C80040630F /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBA36602440C6C80040630F /* CameraView.swift */; };
-		6DBA36632440C7DF0040630F /* MomentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBA36622440C7DF0040630F /* MomentsViewController.swift */; };
+		6DBA36632440C7DF0040630F /* ExperiencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBA36622440C7DF0040630F /* ExperiencesViewController.swift */; };
 		6DBA36652440CB700040630F /* VideoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBA36642440CB6F0040630F /* VideoController.swift */; };
 		6DBF33FA2440CD35005BE2BF /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBF33F92440CD35005BE2BF /* Protocols.swift */; };
 		6DBF33FC2440CEA1005BE2BF /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBF33FB2440CEA1005BE2BF /* FileManager.swift */; };
@@ -51,7 +51,7 @@
 		6DBA365C2440C52C0040630F /* Experience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Experience.swift; sourceTree = "<group>"; };
 		6DBA365E2440C5D10040630F /* AddExperienceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExperienceViewController.swift; sourceTree = "<group>"; };
 		6DBA36602440C6C80040630F /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
-		6DBA36622440C7DF0040630F /* MomentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentsViewController.swift; sourceTree = "<group>"; };
+		6DBA36622440C7DF0040630F /* ExperiencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperiencesViewController.swift; sourceTree = "<group>"; };
 		6DBA36642440CB6F0040630F /* VideoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoController.swift; sourceTree = "<group>"; };
 		6DBF33F92440CD35005BE2BF /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		6DBF33FB2440CEA1005BE2BF /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
@@ -76,7 +76,6 @@
 				5E005850ED3942F928F6441B /* Pods-Moments.debug.xcconfig */,
 				377EC0731319B06E68BEC2EE /* Pods-Moments.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -150,7 +149,7 @@
 		6DBA36562440C49B0040630F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				6DBA36622440C7DF0040630F /* MomentsViewController.swift */,
+				6DBA36622440C7DF0040630F /* ExperiencesViewController.swift */,
 				6DBA365E2440C5D10040630F /* AddExperienceViewController.swift */,
 				6D3E52A924410CCB00C310DA /* DetailsViewController.swift */,
 			);
@@ -308,7 +307,7 @@
 				6D3E52AE2441102900C310DA /* VideoCell.swift in Sources */,
 				6DBF33FA2440CD35005BE2BF /* Protocols.swift in Sources */,
 				6DBA36652440CB700040630F /* VideoController.swift in Sources */,
-				6DBA36632440C7DF0040630F /* MomentsViewController.swift in Sources */,
+				6DBA36632440C7DF0040630F /* ExperiencesViewController.swift in Sources */,
 				6D3E52A62441078C00C310DA /* ExperienceCell.swift in Sources */,
 				6DBA36612440C6C80040630F /* CameraView.swift in Sources */,
 				6DBA36412440C46A0040630F /* AppDelegate.swift in Sources */,

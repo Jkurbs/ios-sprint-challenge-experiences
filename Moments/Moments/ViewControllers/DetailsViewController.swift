@@ -47,7 +47,7 @@ extension DetailsViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
-            if (experience?.videoPath!.isEmpty)! {
+            if experience?.videoPath == "" {
                 return 0
             }
             return 1
@@ -69,14 +69,5 @@ extension DetailsViewController: UICollectionViewDelegate, UICollectionViewDataS
             cell.configure(data)
             return cell
         }
-        
-        
-//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCell.id, for: indexPath) as! ImageCell
-//            let data = experience?.imageData?[indexPath.row]
-//            cell.configure(data)
-//            return cell
-//        if experience?.url != nil {
-
-//        }
     }
 }

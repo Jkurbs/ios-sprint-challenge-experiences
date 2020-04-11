@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MomentsViewController: UIViewController {
+class ExperiencesViewController: UIViewController {
     
     var collectionView: UICollectionView!
     var persistenceController = PersistenceController()
@@ -58,7 +58,7 @@ class MomentsViewController: UIViewController {
 }
 
 
-extension MomentsViewController: UICollectionViewDelegate, UICollectionViewDataSource  {
+extension ExperiencesViewController: UICollectionViewDelegate, UICollectionViewDataSource  {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1

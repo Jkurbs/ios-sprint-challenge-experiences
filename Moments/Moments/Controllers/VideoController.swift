@@ -20,7 +20,6 @@ class VideoController: NSObject {
     var videoPath: String?
     var fileController = FileController()
     
-    
     var audioInput: AVCaptureDeviceInput?
     
     var videoId = UUID().uuidString
