@@ -114,7 +114,8 @@ class VideoController: NSObject {
     }
     
     func startRecording() {
-        fileController.momentURL(id: videoId)
+        let id = UUID().uuidString
+        fileController.momentURL(id: id)
         fileOutput.startRecording(to: fileController.url!, recordingDelegate: self)
     }
     

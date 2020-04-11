@@ -60,7 +60,6 @@ extension DetailsViewController: UICollectionViewDelegate, UICollectionViewDataS
         
         if indexPath.section == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VideoCell.id, for: indexPath) as! VideoCell
-            cell.backgroundColor = .red
             cell.configure((experience?.videoPath)!)
             return cell
         } else {
